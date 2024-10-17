@@ -43,6 +43,7 @@
     top: 10%;
     left: 5%;
     background-color: rgba(143, 128, 115, 0.85);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
     padding: 10px;
     border-radius: 25px;
 }
@@ -65,11 +66,11 @@
 .button-group button{
     width: 200px;
     height: 100px;
-    border: 2px solid black;
     background-color: #8F8073;
     color: #EAE6E5;
     font-size: 36px;
     font-weight: bold;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 10px 0 rgba(0,0,0,0.19);
 }
 
 .button-group button:hover{
