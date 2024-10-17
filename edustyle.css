@@ -80,4 +80,5 @@
 .button-group button:hover{
     background-color: #EAE6E5;
     color: #8F8073;
+    transform:scale(1.5);
 }
