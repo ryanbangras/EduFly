@@ -1,7 +1,15 @@
 .topbar{
     background-color: #5B9279;
+    display: flex;
+    justify-content: space-between;
 }
 .logo-small{
     border: 2px solid #8F8073;
     border-radius: 100%;
+}
+.topbar-span{
+    display: inline-block;
+}
+.topbar-span a{
+    text-decoration: none;
 }
