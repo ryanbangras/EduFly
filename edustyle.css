@@ -57,15 +57,15 @@
 }
 
 .button-container{
-    position: absolute;
-    bottom: 25%;
-    left: 20%;
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    min-width: 100vw;
+    bottom: 0px;
 }
 
 .button-group{
-    display: flex;
-	align-items:center;
-	justify-content:space-between;
+    gap: 100px;
 }
 
 .button-group button{
