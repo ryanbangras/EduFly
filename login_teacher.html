@@ -203,16 +203,13 @@ a{
                     <div><h2>Welcome to Edufly!</h2></div>
                     <div class="login__field">
                         <i class="login__icon fas fa-user"></i>
-                        <input type="text" class="login__input" placeholder="User name / Email">
+                        <input type="text" class="login__input" id="email" placeholder="User name / Email">
                     </div>
                     <div class="login__field">
                         <i class="login__icon fas fa-lock"></i>
-                        <input type="password" class="login__input" placeholder="Password">
+                        <input type="password" class="login__input" id="password" placeholder="Password">
                     </div>		
-                    
-                    <button type="button" class="button login__submit" onclick="window.location.href='home_teacher.html'"><label for="">Log In</label></button>
-
-                    
+                    <button type="button" class="button login__submit" id="login-btn"><label for="">Log In</label></button>
                 </form>
             </div>
             <div class="screen__background">
@@ -223,5 +220,57 @@ a{
             </div>		
         </div>
     </div>
+
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-app.js"></script> 
+    <!-- This is the API from Firebase Realtime Database -->
+    <script src="https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"></script> 
+
+    <!-- Insert this script at the bottom of the HTML, but before you use any Firebase services -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'
+        // TODO: Replace the following with your app's Firebase project configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyBkep4kR1KlxAHUQM8-dJo-b0cOjUA1tCc",
+            authDomain: "edufly-61bfe.firebaseapp.com",
+            projectId: "edufly-61bfe",
+            storageBucket: "edufly-61bfe.appspot.com",
+            messagingSenderId: "467191151194",
+            appId: "1:467191151194:web:cac30fd47ebff5a7233663",
+            measurementId: "G-NQN411353D"
+        };
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        // Add Firebase products that you want to use
+        import { getAuth, signInWithEmailAndPassword, } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js'
+        // Initialize Firebase Authentication and get a reference to the service
+        const auth = getAuth(app);
+
+		document.getElementById('login-btn').addEventListener('click', function() {
+			// Get the form data
+			const email = document.getElementById('email').value;
+			const password = document.getElementById('password').value;
+			
+			// Simple validation (add more complex checks as needed)
+			if (email === '' || password === '') {
+				alert('Please fill in both fields');
+			} else {
+				signInWithEmailAndPassword(auth, email, password)
+				.then((userCredential) => {
+					// Signed in 
+					const user = userCredential.user;
+					window.location.href = 'home_teacher.html';
+					// ...
+				})
+				.catch((error) => {
+					const errorCode = error.code;
+					const errorMessage = error.message;
+					alert(errorMessage);
+				});
+				
+			}
+		});
+    </script>
+
 </body>
 </html>
