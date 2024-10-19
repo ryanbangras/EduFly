@@ -15,6 +15,26 @@
 
     <title>EduFly Portal</title>
 
+    <style>
+        .header{
+            background-color:#8F8073;
+            padding: 40px;
+        }
+      
+        .hide{
+            display: none;
+        }
+        .show{
+            display:block;
+                }
+        #showHomeworkList {
+            text-align: center;
+        }
+        #assignments{
+            height: 50px;
+        }
+    
+    </style>
   
 
 </head>
@@ -36,6 +56,40 @@
             </span>
         </div>
     </nav>
+
+    <div class="header">
+        <div class="row">
+            <div class="col-5"></div>
+            <div class="col-2">
+                <div>
+                    <select name="assignments" id="assignments" onchange="changeVal()">
+                      <option value=""selected>Select Assignment [Class]</option>
+                      <option value="Task 1 [3A]">Task 1 [3A]</option>
+                      <option value="Task 1 [3B]">Task 1 [3B]</option>
+                      <option value="Task 2 [3A]">Task 2 [3A]</option>
+                      <option value="Task 2 [3B]">Task 2 [3B]</option>
+                    </select>
+                  </div>
+            </div>
+            <div class="col-5"></div>
+        </div>
+    </div>
+
+    <div>
+        <div id="homeworkList" class="hide">
+            <h1 style = "text-align:center;" id="showHomeworkList"></h1>
+            <div id="showHomeworkList"></div>
+          </div>
+    </div>
+
+    <script>
+        function changeVal(){
+            var f = document.getElementById("assignments");
+            var selected = f.options[f.selectedIndex].value;
+            document.getElementById("showHomeworkList").innerHTML += '<p>' + selected + '</p>';
+            document.getElementById("homeworkList").className="show";
+        }
+    </script>
 
 </body>
 
