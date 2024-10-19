@@ -16,32 +16,21 @@
     <title>EduFly Portal</title>
 
     <style>    
-        h1{
-            padding: 10px;
-        }
+    #announcementBtn{
+        background-color: white;
+        width: 200px;
+        height: 50px;
+        position: absolute; 
+        top: 80px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
 
-        #attendance{
-            display: flex;
-            justify-content: center;
-            font-size: 25px;
-            background-color:#8F8073;
-            border: 1px solid #8F8073;
-            border-radius: 25px;
-            padding: 25px;
-            width: 250px;
-        }
-
-        #gradesList{
-            font-size: 25px;
-            background-color:#8F8073;
-            border: 1px solid #8F8073;
-            border-radius: 25px;
-            padding: 25px;
-            width: 250px;
-            height: 130px;
-        }
-
-
+    h2{
+        text-align:center;
+    }
 
     </style>
 
@@ -64,24 +53,19 @@
             </span>
         </div>
     </nav>
-    
+   
     <div class="container-fluid">
-        <div class="row text-center mt-5 mb-3" style="background-color:#8F8073">
-            <h1>Academic Dashboard</h1>
-        </div>
-        <br>
-        <br>
+            <a class="btn" id="announcementBtn" href="make-annoucement.html" role="button"> Make an annoucement </a> 
+            <div class="row"></div>
+            <div class="row">
+                <h1 style="margin-top:80px;text-align: center; background-color: #8F8073; padding: 40px;">All Annoucements</h1>
+            </div>
 
-        <div class="row"></div>
-        <div class="row">
-            <div class="col-3"></div>
-            <div class="col-2"><button id="attendance"><a href="attendance-tracker1.html" class="text-decoration-none text-dark">Check Attendance</a></button></div>
-            <div class="col-2"></div>
-            <div class="col-2"><button id="gradesList"><a href="grades-tracker1.html" class="text-decoration-none text-dark">Check Grades</a></button></div>
-            <div class="col-3"></div>
-        </div>
+            <div class="row mt-3 bg-light">
+                <h2>Past Announcements</h2>
+                
+            </div>
     </div>
-    
 
 </body>
 
