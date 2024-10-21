@@ -1,3 +1,11 @@
+<?php
+
+require_once 'common.php';
+
+$dao = new AnnouncementDAO();
+$posts = $dao->getAll(); // Get an Indexed Array of Post objects
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -61,44 +69,54 @@
                 <h1 style="margin-top:80px;text-align: center; background-color: #8F8073; padding: 40px;">All Annoucements</h1>
             </div>
 
-            <div class="row mt-3 bg-light">
-                <h2>Past Announcements</h2>
-                <table class="table-striped table-hover">
+           
+    <?php
+        if( count($posts) > 0 ) {
+
+            echo "
+                <table class='table table-striped'>
                     <tr>
-                        <td class="border-bottom border-success">
-                            <h5>Title of announcement</h5>
-                            <p>Mr Ryan BANGRAS posted on January 5,2024 12:37PM</p>
-                            <br>
-                            <p>Announcement Content</p>
+                        <th>ID</th>
+                        <th>Create Timestamp</th>
+                        <th>Last Update Timestamp</th>
+                        <th>Subject</th>
+                        <th>Author</th>
+                        <th>Message</th>
+                    </tr>
+            ";
+
+            foreach($posts as $post_object ) {
+                echo "
+                    <tr>
+                        <td>
+                            {$post_object->getID()}
+                        </td>
+                        <td>
+                            {$post_object->getCreateTimestamp()}
+                        </td>
+                        <td>
+                            {$post_object->getUpdateTimestamp()}
+                        </td>
+                        <td>
+                            {$post_object->getTitle()}
+                        </td>
+                        <td>
+                            {$post_object->getAuthor()}
+                        </td>
+                        <td>
+                            {$post_object->getMessage()}
                         </td>
                     </tr>
-                    <tr>
-                        <td class="border-bottom border-success">
-                            <h5>Title of announcement</h5>
-                            <p>Mr Ryan BANGRAS posted on January 5,2024 12:37PM</p>
-                            <br>
-                            <p>Announcement Content</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="border-bottom border-success">
-                            <h5>Title of announcement</h5>
-                            <p>Mr Ryan BANGRAS posted on January 5,2024 12:37PM</p>
-                            <br>
-                            <p>Announcement Content</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="border-bottom border-success">
-                            <h5>Title of announcement</h5>
-                            <p>Mr Ryan BANGRAS posted on January 5,2024 12:37PM</p>
-                            <br>
-                            <p>Announcement Content</p>
-                        </td>
-                    </tr>
+                ";
+            }
+
+            echo "
                 </table>
-            </div>
-    </div>
+            ";
+        }
+    ?>
+
+    </div> 
 
 </body>
 
