@@ -22,7 +22,6 @@ mongoose
         console.log(error);
     })
 
-console.log("Running on port: ${app.port}")
 // const teacherRouter = express.Router();
 // app.use('/teachers', studentRouter)
 
