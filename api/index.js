@@ -2,6 +2,7 @@ var express = require("express");
 const mongoose = require('mongoose');
 var cors = require("cors");
 const Student = require("./models/Student");
+const Timetable = require("./models/Timetable");
 const dotenv = require('dotenv')
 const app = express();
 
@@ -9,7 +10,7 @@ dotenv.config({ path: './secret.env' })
 
 app.use(cors());
 app.use(express.json());
-app.listen(3000);
+app.listen(3000); // Port number
 
 var MONGOURL = process.env.MONGOURI;
 
