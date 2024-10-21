@@ -15,4 +15,5 @@ const studentSchema = new mongoose.Schema({
     }
 })
 
+// Change name here
 module.exports = mongoose.model('Student', studentSchema)
