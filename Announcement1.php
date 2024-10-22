@@ -2,9 +2,12 @@
 
 require_once 'common.php';
 
-$dao = new AnnouncementDAO();
+$dao = new PostDAO();
 $posts = $dao->getAll(); // Get an Indexed Array of Post objects
+
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -69,19 +72,20 @@ $posts = $dao->getAll(); // Get an Indexed Array of Post objects
                 <h1 style="margin-top:80px;text-align: center; background-color: #8F8073; padding: 40px;">All Annoucements</h1>
             </div>
 
-           
-    <?php
+            <?php
         if( count($posts) > 0 ) {
 
+            echo "<h1>My Blog Posts</h1>";
+
             echo "
-                <table class='table table-striped'>
+                <table border='1'>
                     <tr>
                         <th>ID</th>
                         <th>Create Timestamp</th>
                         <th>Last Update Timestamp</th>
                         <th>Subject</th>
-                        <th>Author</th>
-                        <th>Message</th>
+                        <th>Edit Link</th>
+                        <th>Delete Link</th>
                     </tr>
             ";
 
@@ -98,13 +102,13 @@ $posts = $dao->getAll(); // Get an Indexed Array of Post objects
                             {$post_object->getUpdateTimestamp()}
                         </td>
                         <td>
-                            {$post_object->getTitle()}
+                            {$post_object->getSubject()}
                         </td>
                         <td>
-                            {$post_object->getAuthor()}
+                            <a href='edit.php?id={$post_object->getID()}'>Edit</a>
                         </td>
                         <td>
-                            {$post_object->getMessage()}
+                            <a href='delete.php?id={$post_object->getID()}'>Delete</a>
                         </td>
                     </tr>
                 ";
@@ -116,6 +120,8 @@ $posts = $dao->getAll(); // Get an Indexed Array of Post objects
         }
     ?>
 
+           
+    
     </div> 
 
 </body>
