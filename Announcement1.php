@@ -1,12 +1,4 @@
-<?php
 
-require_once 'common.php';
-
-$dao = new PostDAO();
-$posts = $dao->getAll(); // Get an Indexed Array of Post objects
-
-
-?>
 
 
 <!DOCTYPE html>
