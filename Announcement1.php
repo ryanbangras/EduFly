@@ -66,7 +66,7 @@ $announcements = $dao->getAll(); // Get an Indexed Array of Post objects
     </nav>
    
     <div class="container-fluid">
-            <a class="btn" id="announcementBtn" href="make-annoucement.html" role="button"> Make an annoucement </a> 
+            <a class="btn" id="announcementBtn" href="Announcement2.html" role="button"> Make an annoucement </a> 
             <div class="row"></div>
             <div class="row">
                 <h1 style="margin-top:80px;text-align: center; background-color: #8F8073; padding: 40px;">All Annoucements</h1>
@@ -80,7 +80,14 @@ $announcements = $dao->getAll(); // Get an Indexed Array of Post objects
             foreach($announcements as $announcement_object) {
                 echo "<tr>
                     <td>
-                    <h3>{$announcement_object->getTitle()}</h3>
+                    <h3>{$announcement_object->getTitle()} 
+                    <span class='dropend'> 
+                    <button class='btn btn-secondary' type='button' data-bs-toggle='dropdown' aria-expanded='false'> </button>
+                    <ul class='dropdown-menu'>
+                        <li><a href='deleteAnnouncement.php?id={$announcement_object->getID()}'><button class='dropdown-item' type='button'>Delete Announcement</button></a>
+                    </ul>
+                    </span>
+                    </h3>
                     Created by {$announcement_object->getAuthor()} on {$announcement_object->getCreateTimestamp()}
 
                     <br>
