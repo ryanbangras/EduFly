@@ -1,4 +1,12 @@
+<?php
 
+require_once 'common.php';
+
+$dao = new AnnouncementDAO();
+$announcements = $dao->getAll(); // Get an Indexed Array of Post objects
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -64,6 +72,50 @@
                 <h1 style="margin-top:80px;text-align: center; background-color: #8F8073; padding: 40px;">All Annoucements</h1>
             </div>
 
+            <?php
+        if( count($announcements) > 0 ) {
+
+            echo "<h1>My Blog Posts</h1>";
+
+            echo "
+                <table border='1'>
+                    <tr>
+                        <th>ID</th>
+                        <th>Create Timestamp</th>
+                        <th>Title</th>
+                        <th>Author</th>
+                        <th>Message</th>
+                    </tr>
+            ";
+
+            foreach($announcements as $announcement_object) {
+                echo "
+                    <tr>
+                        <td>
+                            {$announcement_object->getID()}
+                        </td>
+                        <td>
+                            {$announcement_object->getCreateTimestamp()}
+                        </td>
+                        <td>
+                            {$announcement_object->getTitle()}
+                        </td>
+                        <td>
+                            {$announcement_object->getAuthor()}
+                        </td>
+                        <td>
+                            {$announcement_object->getMessage()}
+                        </td>
+                       
+                    </tr>
+                ";
+            }
+
+            echo "
+                </table>
+            ";
+        }
+    ?>
            
     
     </div> 

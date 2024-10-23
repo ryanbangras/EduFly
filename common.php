@@ -1,9 +1,6 @@
 <?php
-
-header("Access-Control-Allow-Origin: *");
-
-spl_autoload_register(function ($class){
-    require_once "model/$class" . ".php";
-});
+spl_autoload_register(function($class){
+    require_once "modelAnnouncement/$class" . ".php";
+})
 
 ?>
