@@ -152,7 +152,7 @@ timetableRouter.get('/:id', async (request, response) => {
 })
 
 // Return timetable by section  (NEED TO FIX)
-timetableRouter.get('/:section', async (request, response) => {
+timetableRouter.get('/section/:section', async (request, response) => {
     try {
         const { section } = request.params;
 
