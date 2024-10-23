@@ -66,7 +66,7 @@ $announcements = $dao->getAll(); // Get an Indexed Array of Post objects
     </nav>
    
     <div class="container-fluid">
-            <a class="btn" id="announcementBtn" href="make-annoucement.html" role="button"> Make an annoucement </a> 
+            <a class="btn" id="announcementBtn" href="Announcement2.html" role="button"> Make an annoucement </a> 
             <div class="row"></div>
             <div class="row">
                 <h1 style="margin-top:80px;text-align: center; background-color: #8F8073; padding: 40px;">All Annoucements</h1>
