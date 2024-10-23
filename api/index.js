@@ -152,11 +152,11 @@ timetableRouter.get('/:id', async (request, response) => {
 })
 
 // Return timetable by section 
-timetableRouter.get('/section/:section', async (request, response) => {
+timetableRouter.get('/section/:id', async (request, response) => {
     try {
-        const { section } = request.params;
-
-        await Timetable.find(section).then(timetable => {
+        const { id } = request.params;
+        console.log("Hello")
+        await Timetable.find({section: id}).then(timetable => {
             response.status(200).json(timetable)
         });
 
