@@ -72,54 +72,6 @@ $posts = $dao->getAll(); // Get an Indexed Array of Post objects
                 <h1 style="margin-top:80px;text-align: center; background-color: #8F8073; padding: 40px;">All Annoucements</h1>
             </div>
 
-            <?php
-        if( count($posts) > 0 ) {
-
-            echo "<h1>My Blog Posts</h1>";
-
-            echo "
-                <table border='1'>
-                    <tr>
-                        <th>ID</th>
-                        <th>Create Timestamp</th>
-                        <th>Last Update Timestamp</th>
-                        <th>Subject</th>
-                        <th>Edit Link</th>
-                        <th>Delete Link</th>
-                    </tr>
-            ";
-
-            foreach($posts as $post_object ) {
-                echo "
-                    <tr>
-                        <td>
-                            {$post_object->getID()}
-                        </td>
-                        <td>
-                            {$post_object->getCreateTimestamp()}
-                        </td>
-                        <td>
-                            {$post_object->getUpdateTimestamp()}
-                        </td>
-                        <td>
-                            {$post_object->getSubject()}
-                        </td>
-                        <td>
-                            <a href='edit.php?id={$post_object->getID()}'>Edit</a>
-                        </td>
-                        <td>
-                            <a href='delete.php?id={$post_object->getID()}'>Delete</a>
-                        </td>
-                    </tr>
-                ";
-            }
-
-            echo "
-                </table>
-            ";
-        }
-    ?>
-
            
     
     </div> 
