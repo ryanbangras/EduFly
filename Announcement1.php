@@ -75,45 +75,25 @@ $announcements = $dao->getAll(); // Get an Indexed Array of Post objects
             <?php
         if( count($announcements) > 0 ) {
 
-            echo "<h1>My Blog Posts</h1>";
-
-            echo "
-                <table border='1'>
-                    <tr>
-                        <th>ID</th>
-                        <th>Create Timestamp</th>
-                        <th>Title</th>
-                        <th>Author</th>
-                        <th>Message</th>
-                    </tr>
-            ";
-
+            echo "<div>";
+            echo "<table class='table table-striped'>";
             foreach($announcements as $announcement_object) {
-                echo "
-                    <tr>
-                        <td>
-                            {$announcement_object->getID()}
-                        </td>
-                        <td>
-                            {$announcement_object->getCreateTimestamp()}
-                        </td>
-                        <td>
-                            {$announcement_object->getTitle()}
-                        </td>
-                        <td>
-                            {$announcement_object->getAuthor()}
-                        </td>
-                        <td>
-                            {$announcement_object->getMessage()}
-                        </td>
-                       
-                    </tr>
-                ";
-            }
+                echo "<tr>
+                    <td>
+                    <h3>{$announcement_object->getTitle()}</h3>
+                    Created by {$announcement_object->getAuthor()} on {$announcement_object->getCreateTimestamp()}
 
-            echo "
-                </table>
-            ";
+                    <br>
+                    <br>
+
+                    {$announcement_object->getMessage()}
+                
+                    </td>
+                
+                </tr>";
+            }
+            echo "</table>";
+            echo "</div>";
         }
     ?>
            
