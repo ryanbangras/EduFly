@@ -31,6 +31,69 @@ class AnnouncementDAO{
         return $announcements;
     }
 
+    public function get($id) {
+        // STEP 1
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+
+        // STEP 2
+        $sql = "SELECT
+                    *
+                FROM announcement
+                WHERE 
+                    id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        // STEP 3
+        $stmt->execute();
+        $stmt->setFetchMode(PDO::FETCH_ASSOC);
+
+        // STEP 4
+        $post_object = null;
+        if( $row = $stmt->fetch() ) {
+            $post_object = 
+                new Announcement(
+                    $row['id'],
+                    $row['create_timestamp'],
+                    $row['title'],
+                    $row['author'],
+                    $row['message']);
+        }
+
+        // STEP 5
+        $stmt = null;
+        $conn = null;
+
+        // STEP 6
+        return $post_object;
+    }
+
+    public function delete($id) {
+        // STEP 1
+        $connMgr = new ConnectionManager();
+        $conn = $connMgr->getConnection();
+
+        // STEP 2
+        $sql = "DELETE FROM
+                    announcement
+                WHERE 
+                    id = :id";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+        //STEP 3
+        $status = $stmt->execute();
+        
+        // STEP 4
+        $stmt = null;
+        $conn = null;
+
+        // STEP 5
+        return $status;
+    }
+
+
     public function add($title, $author, $message) {
         // STEP 1
         $connMgr = new ConnectionManager();
