@@ -105,4 +105,98 @@ studentRouter.delete('/:id', async (request, response) => {
     }
 })
 
-module.exports = app;
+const timetableRouter = express.Router();
+app.use('/timetable', timetableRouter)
+
+// Creates new timetable object into the database
+timetableRouter.post('/', async (request, response) => {
+    try {
+        const { section, event, startTime, endTime } = request.body;  // Extracts student data from request body
+
+        if (!section || !event || !startTime || !endTime) {
+            return res.status(400).json({ error: 'Missing field' });
+        }
+
+        const timetableEvent = new Timetable({ section, event, startTime, endTime });
+
+        await timetableEvent.save()
+
+        return response.status(200).json(timetableEvent);
+    } catch (err) {
+        return response.status(400).json({ "error_message": "Something went wrong" });
+    }
+})
+
+// Return all timetables in the database
+timetableRouter.get('/', async (request, response) => {
+    try {
+        const timetable = await Timetable.find();
+        return response.status(200).json(timetable);
+    } catch (err) {
+        return response.status(400).json({ "error_message": "Something went wrong" });
+    }
+})
+
+// Return timetable event by id
+timetableRouter.get('/:id', async (request, response) => {
+    try {
+        const { id } = request.params;
+
+        await Timetable.findById(id).then(timetable => {
+            response.status(200).json(timetable)
+        });
+
+    } catch (err) {
+        return response.status(400).json({ "error_message": "Something went wrong" });
+    }
+})
+
+// Return timetable by section  (NEED TO FIX)
+timetableRouter.get('/:section', async (request, response) => {
+    try {
+        const { section } = request.params;
+
+        await Timetable.find(section).then(timetable => {
+            response.status(200).json(timetable)
+        });
+
+    } catch (err) {
+        return response.status(400).json({ "error_message": "Something went wrong" });
+    }
+})
+
+// Edit contents of timetable event by id 
+timetableRouter.put('/:id', async (request, response) => {
+    try {
+        const { id } = request.params;
+        const { section, event, startTime, endTime } = request.body;  // Extract student data from request body
+
+        if (!section || !event || !startTime || !endTime) {
+            return response.status(400).json({ error: 'Missing field' });
+        }
+
+        const timetableData = { section, event, startTime, endTime };
+        await Timetable.findByIdAndUpdate(id, timetableData, { new: true }).then(timetable => {
+            response.status(200).json(timetable)
+        });
+
+    } catch (err) {
+        return response.status(400).json({ "error_message": "Something went wrong" });
+    }
+})
+
+// Delete timetable event by id
+timetableRouter.delete('/:id', async (request, response) => {
+    try {
+        const { id } = request.params;
+
+        await Timetable.findByIdAndDelete(id).then(timetable => {
+            response.status(200).json(timetable)
+        });
+
+    } catch (err) {
+        return response.status(400).json({ "error_message": "Something went wrong" });
+    }
+})
+
+module.exports = app; 

@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 
 const timetableSchema = new mongoose.Schema({
-    event: {
+    section: {
+        type: String,
+        required: true
+    },event: {
         type: String,
         required: true
     },
