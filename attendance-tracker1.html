@@ -40,8 +40,17 @@
             </span>
         </div>
     </nav>
-  
+    
+
 
 </body>
-
+    <script>
+        axios.get('/timetable')
+            .then(response => {
+                console.log(response.data);
+            })
+            .catch( error => {
+                console.log(error.message);
+            });
+    </script>
 </html>

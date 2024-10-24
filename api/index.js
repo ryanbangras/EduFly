@@ -252,7 +252,7 @@ announcementRouter.get('/section/:id', async (request, response) => {
         const { id } = request.params;
 
         await Announcement.find({ section: id }).then(announcement => {
-            response.status(200).json(announcement)
+            response.status(200).json(announcement);
         });
 
     } catch (err) {
