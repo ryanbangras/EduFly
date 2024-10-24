@@ -40,7 +40,7 @@ studentRouter.post('/', async (request, response) => {
 
         const student = new Student({ name, section, taskList });
 
-        await student.save()
+        await student.save();
 
         return response.status(200).json(student);
     } catch (err) {
@@ -64,7 +64,7 @@ studentRouter.get('/:id', async (request, response) => {
         const { id } = request.params;
 
         await Student.findById(id).then(student => {
-            response.status(200).json(student)
+            response.status(200).json(student);
         });
 
     } catch (err) {
@@ -76,9 +76,9 @@ studentRouter.get('/:id', async (request, response) => {
 studentRouter.get('/section/:id', async (request, response) => {
     try {
         const { id } = request.params;
-        
-        await Student.find({section: id}).then(student => {
-            response.status(200).json(student)
+
+        await Student.find({ section: id }).then(student => {
+            response.status(200).json(student);
         });
 
     } catch (err) {
@@ -98,7 +98,7 @@ studentRouter.put('/:id', async (request, response) => {
 
         const studentData = { name, section, taskList };
         await Student.findByIdAndUpdate(id, studentData, { new: true }).then(student => {
-            response.status(200).json(student)
+            response.status(200).json(student);
         });
 
     } catch (err) {
@@ -112,7 +112,7 @@ studentRouter.delete('/:id', async (request, response) => {
         const { id } = request.params;
 
         await Student.findByIdAndDelete(id).then(student => {
-            response.status(200).json(student)
+            response.status(200).json(student);
         });
 
     } catch (err) {
@@ -134,7 +134,7 @@ timetableRouter.post('/', async (request, response) => {
 
         const timetableEvent = new Timetable({ section, event, startTime, endTime });
 
-        await timetableEvent.save()
+        await timetableEvent.save();
 
         return response.status(200).json(timetableEvent);
     } catch (err) {
@@ -158,7 +158,7 @@ timetableRouter.get('/:id', async (request, response) => {
         const { id } = request.params;
 
         await Timetable.findById(id).then(timetable => {
-            response.status(200).json(timetable)
+            response.status(200).json(timetable);
         });
 
     } catch (err) {
@@ -170,9 +170,9 @@ timetableRouter.get('/:id', async (request, response) => {
 timetableRouter.get('/section/:id', async (request, response) => {
     try {
         const { id } = request.params;
-        
-        await Timetable.find({section: id}).then(timetable => {
-            response.status(200).json(timetable)
+
+        await Timetable.find({ section: id }).then(timetable => {
+            response.status(200).json(timetable);
         });
 
     } catch (err) {
@@ -192,7 +192,7 @@ timetableRouter.put('/:id', async (request, response) => {
 
         const timetableData = { section, event, startTime, endTime };
         await Timetable.findByIdAndUpdate(id, timetableData, { new: true }).then(timetable => {
-            response.status(200).json(timetable)
+            response.status(200).json(timetable);
         });
 
     } catch (err) {
@@ -206,7 +206,7 @@ timetableRouter.delete('/:id', async (request, response) => {
         const { id } = request.params;
 
         await Timetable.findByIdAndDelete(id).then(timetable => {
-            response.status(200).json(timetable)
+            response.status(200).json(timetable);
         });
 
     } catch (err) {
@@ -220,7 +220,7 @@ app.use('/announcement', announcementRouter);
 // Creates new announcement object into the database
 announcementRouter.post('/', async (request, response) => {
     try {
-        const { timestamp, section, title, author, message } = request.body; 
+        const { timestamp, section, title, author, message } = request.body;
 
         if (!timestamp || !section || !title || !author || !message) {
             return res.status(400).json({ error: 'Missing field' });
@@ -228,7 +228,7 @@ announcementRouter.post('/', async (request, response) => {
 
         const announcement = new Announcement({ timestamp, section, title, author, message });
 
-        await announcement.save()
+        await announcement.save();
 
         return response.status(200).json(announcement);
     } catch (err) {
@@ -250,8 +250,8 @@ announcementRouter.get('/', async (request, response) => {
 announcementRouter.get('/section/:id', async (request, response) => {
     try {
         const { id } = request.params;
-        
-        await Announcement.find({section: id}).then(announcement => {
+
+        await Announcement.find({ section: id }).then(announcement => {
             response.status(200).json(announcement)
         });
 
