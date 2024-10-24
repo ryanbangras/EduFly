@@ -246,4 +246,18 @@ announcementRouter.get('/', async (request, response) => {
     }
 })
 
+// Return announcement by section
+announcementRouter.get('/section/:id', async (request, response) => {
+    try {
+        const { id } = request.params;
+        
+        await Announcement.find({section: id}).then(announcement => {
+            response.status(200).json(announcement)
+        });
+
+    } catch (err) {
+        return response.status(400).json({ "error_message": "Something went wrong" });
+    }
+})
+
 module.exports = app; 
