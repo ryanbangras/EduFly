@@ -68,3 +68,10 @@ if( isset($_POST['title']) && isset($_POST['author']) && isset($_POST['message']
    </div>
 </body>
 </html>
+<!-- 
+const announcement = new Announcement({
+    timestamp: new Date(),  // Use Date object
+    title: "Important Update",
+    author: ["John Doe"],
+    message: ["This is an important announcement."]
+}); -->
