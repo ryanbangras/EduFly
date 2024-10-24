@@ -12,7 +12,15 @@ if( isset($_POST['title']) && isset($_POST['author']) && isset($_POST['message']
 
     $dao = new AnnouncementDAO();
     $status = $dao->add($title, $author, $message);
+
 }
+// <!-- 
+// const announcement = new Announcement({
+//     timestamp: new Date(),  // Use Date object
+//     title: "Important Update",
+//     author: ["John Doe"],
+//     message: ["This is an important announcement."]
+// }); -->
 
 ?>
 <html>
@@ -68,10 +76,3 @@ if( isset($_POST['title']) && isset($_POST['author']) && isset($_POST['message']
    </div>
 </body>
 </html>
-<!-- 
-const announcement = new Announcement({
-    timestamp: new Date(),  // Use Date object
-    title: "Important Update",
-    author: ["John Doe"],
-    message: ["This is an important announcement."]
-}); -->
