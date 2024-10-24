@@ -2,7 +2,11 @@ const mongoose = require('mongoose');
 
 const announcementSchema = new mongoose.Schema({
     timestamp: {
-        type: Date,
+        type: String,
+        required: true
+    },
+    section: {
+        type: String,
         required: true
     },
     title: {
@@ -10,11 +14,11 @@ const announcementSchema = new mongoose.Schema({
         required: true
     },
     author: {
-        type: [String],
+        type: String,
         required: true
     },
     message: {
-        type: [String],
+        type: String,
         required: true
     }
 

@@ -217,6 +217,33 @@ timetableRouter.delete('/:id', async (request, response) => {
 const announcementRouter = express.Router();
 app.use('/announcement', announcementRouter);
 
+// Creates new announcement object into the database
+announcementRouter.post('/', async (request, response) => {
+    try {
+        const { timestamp, section, title, author, message } = request.body; 
 
+        if (!timestamp || !section || !title || !author || !message) {
+            return res.status(400).json({ error: 'Missing field' });
+        }
+
+        const announcement = new Announcement({ timestamp, section, title, author, message });
+
+        await announcement.save()
+
+        return response.status(200).json(announcement);
+    } catch (err) {
+        return response.status(400).json({ "error_message": "Something went wrong" });
+    }
+})
+
+// Return all announcements
+announcementRouter.get('/', async (request, response) => {
+    try {
+        const announcement = await Announcement.find();
+        return response.status(200).json(announcement);
+    } catch (err) {
+        return response.status(400).json({ "error_message": "Something went wrong" });
+    }
+})
 
 module.exports = app; 
