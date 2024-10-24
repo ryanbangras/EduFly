@@ -37,7 +37,7 @@ import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/fireba
                 })
                 .catch((error) => {
                     const errorCode = error.code;
-                    const errorMessage = error.message;
+                    const errorMessage = error.message + "";
                     alert(errorCode);
                     // ..
                 });
