@@ -23,8 +23,7 @@ mongoose
         console.log(error);
     });
 
-// const teacherRouter = express.Router();
-// app.use('/teachers', teacherRouter);
+
 
 const studentRouter = express.Router();
 app.use('/students', studentRouter);
@@ -120,6 +119,8 @@ studentRouter.delete('/:id', async (request, response) => {
     }
 })
 
+
+
 const timetableRouter = express.Router();
 app.use('/timetable', timetableRouter);
 
@@ -214,6 +215,8 @@ timetableRouter.delete('/:id', async (request, response) => {
     }
 })
 
+
+
 const announcementRouter = express.Router();
 app.use('/announcement', announcementRouter);
 
@@ -259,5 +262,7 @@ announcementRouter.get('/section/:id', async (request, response) => {
         return response.status(400).json({ "error_message": "Something went wrong" });
     }
 })
+
+
 
 module.exports = app; 
