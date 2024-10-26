@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../edustyle.css">
+    <link rel="stylesheet" href="../edustyle-navbar.css">
+    <!-- Bootstrap JS bundle to be placed before the closing </body> tag -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Vue 3 -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <title>EduFly Portal</title>
+
+    
+    <style>    
+       #announcementBtn{
+        background-color: white;
+        width: 200px;
+        height: 50px;
+        position: absolute; 
+        top: 80px;
+        right: 20px;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+    }
+    
+    </style>
+    
+
+</head>
+<body class="whole">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <a href="#" class="icon-left">Edufly Icon</a> 
+        </div>
+        <div class="navbar-right">
+            <span class="icon-right"><img id="profile" src="img/profile.png">
+                <span class="dropdown">{{Name}}
+                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> </button>
+                <ul class="dropdown-menu">
+                    <li><button class="dropdown-item" type="button">Profile</button></li>
+                    <li><button class="dropdown-item" type="button">Logout</button></li>
+                </ul>
+                </span>
+            </span>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <h1 style="text-align: center; background-color: #8F8073; padding: 40px;">All Annoucements</h1>
+        </div>
+        <div class="row"> <a class="btn" id="announcementBtn" href="EditAnnouncement.html" role="button"> Edit an annoucement </a> </div>
+        <div id="AllAnnouncements"></div>
+    </div>
+
+    
+
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+      
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+          apiKey: "AIzaSyDD13Rr_usNmSfnuKw4hfnBlIc_ysOP1uA",
+          authDomain: "edufly-announcement.firebaseapp.com",
+          databaseURL: "https://edufly-announcement-default-rtdb.asia-southeast1.firebasedatabase.app",
+          projectId: "edufly-announcement",
+          storageBucket: "edufly-announcement.appspot.com",
+          messagingSenderId: "160973503753",
+          appId: "1:160973503753:web:62a0e0e09250151b7027d8",
+          measurementId: "G-J7967WL9L5"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        import{getDatabase, ref, get, child} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js"
+
+        const db=getDatabase()
+
+        let allAnnouncements = document.getElementById('AllAnnouncements')
+    
+        function getAnnouncements(){
+        const dbref = ref(db)
+        get(child(dbref, 'AnnouncementSet')).then((announcements) =>{
+            announcements.forEach(anm =>{
+                AddAnnouncement(anm)
+            })
+        })
+    }
+
+        function AddAnnouncement(anm){
+            let key = anm.key;
+            let value=anm.val();
+
+            let id = document.createElement("h3");
+            let title = document.createElement("h4")
+            let message = document.createElement('p')
+            let breakpoint = document.createElement("hr")
+
+            id.innerHTML = "Announcment ID: " + value.id;
+            title.innerHTML = "Title: " + value.title;
+            message.innerHTML = "Dear students: <br>" + value.message
+
+            let div = document.createElement('div')
+            div.append(id, title, message, breakpoint)
+            allAnnouncements.append(div)
+        }
+
+        window.addEventListener('load', getAnnouncements)
+
+       </script>
+</body>
+</html>
