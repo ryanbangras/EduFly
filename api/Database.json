@@ -1,0 +1,48 @@
+{
+    "AnnouncementSet":{
+        "1":{
+            "id": 1,
+            "title":"Homework for this weekend",
+            "message":"Complete the Lab 1 and submit on Monday (25 October 2023)"
+        }, 
+        "2":{
+            "id": 2,
+            "title": "Reminder for Consent Form",
+            "message":"Do remember to submit your consent form for vaccination by this Friday, 28 October 2023"
+        },
+        "3":{
+            "id": 3,
+            "title": "Rest well",
+            "message": "Good morning class! Do remember to rest, relax and get energised for next week. See everyone soon!!"
+        },
+        "4":{
+            "id": 4,
+            "title": "Welcome back to school!",
+            "message":"Welcome back to school everyone! See you on Monday!"
+        }
+    },
+
+    "StudentSet":{
+        "123123":{
+            "Cnic": 123123,
+            "Email": "student1@gmail.com",
+            "Name": "student1",
+            "OverallGrade": "B",
+            "Absent": 0
+        },
+        "1234567":{
+            "Cnic": 1234567,
+            "Email": "student2@gmail.com",
+            "Name": "student2",
+            "OverallGrade": "A",
+            "Absent": 1
+        },
+        "11829437":{
+            "Cnic": 11829437,
+            "Email": "hello@amazing.com",
+            "Name": "Tacy",
+            "OverallGrade": "C",
+            "Absent": 3
+        }
+    }
+}
