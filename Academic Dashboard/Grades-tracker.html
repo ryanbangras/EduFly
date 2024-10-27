@@ -51,6 +51,7 @@
                     <th>Student Name</th>
                     <th>Student Email</th>
                     <th>Student Overall Grade</th>
+                    <th>Edit Student's Grade</th>
                 </thead>
     
                 <tbody id="tbody"></tbody>
@@ -108,14 +109,17 @@
             let td3 = document.createElement('td')
             let td4 = document.createElement('td')
             let td5 = document.createElement('td')
+            let td6 = document.createElement('td')
 
             td1.innerHTML = ++StuIdx;
             td2.innerHTML = Cnic
             td3.innerHTML = Name
             td4.innerHTML = Email
             td5.innerHTML = OverallGrade
+            td6.innerHTML = `<a href=./EditGrade.html?studentCNIC=${encodeURIComponent(Cnic)}&studentName=${encodeURIComponent(Name)}&studentEmail=${encodeURIComponent(Email)}&currentGrade=${encodeURIComponent(OverallGrade)}>Edit Grade</a>`
 
-            trow.append(td1, td2, td3, td4, td5)
+
+            trow.append(td1, td2, td3, td4, td5,td6)
             tbody.append(trow)
         }
 
