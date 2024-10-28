@@ -1,5 +1,3 @@
-<!-- index.html -->
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -22,10 +20,10 @@
 <body class="whole">
     <nav class="navbar">
         <div class="navbar-left">
-            <img src="../img/eduflyicon.png" alt="Edufly Icon" style="height: 50px; width: auto;">
+            <a href="#" class="icon-left">Edufly Icon</a> 
         </div>
         <div class="navbar-right">
-            <span class="icon-right"><img id="profile" src="../img/profile.png">
+            <span class="icon-right"><img id="profile" src="img/profile.png">
                 <span class="dropdown">{{Name}}
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> </button>
                 <ul class="dropdown-menu">
@@ -50,15 +48,9 @@
                 <div id="event-section">
                     <h3>Add Event</h3>
                     <input type="date" id="eventDate">
-                    <input type="text"
-                        id="eventTitle"
-                        placeholder="Event Title">
-                    <input type="text"
-                        id="eventDescription"
-                        placeholder="Event Description">
-                    <button id="addEvent">
-                        Add
-                    </button>
+                    <input type="text" id="eventTitle" placeholder="Event Title">
+                    <input type="text" id="eventDescription" placeholder="Event Description">
+                    <button id="addEvent">Add</button>
                 </div>
                 <div id="reminder-section">
                     <h3>Reminders</h3>
@@ -115,113 +107,106 @@
         </div>
     </div>
 </div>
-    <!-- Include the JavaScript file for the calendar functionality -->
-    <script type="module">
-         // Import the functions you need from the SDKs you need
-         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-            import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-analytics.js";
             // TODO: Add SDKs for Firebase products that you want to use
             // https://firebase.google.com/docs/web/setup#available-libraries
           
             // Your web app's Firebase configuration
             // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-            const firebaseConfig = {
-              apiKey: "",
-              authDomain: "edufly-announcement.firebaseapp.com",
-              databaseURL: "https://edufly-announcement-default-rtdb.asia-southeast1.firebasedatabase.app",
-              projectId: "edufly-announcement",
-              storageBucket: "edufly-announcement.appspot.com",
-              messagingSenderId: "160973503753",
-              appId: "1:160973503753:web:62a0e0e09250151b7027d8",
-              measurementId: "G-J7967WL9L5"
-            };
+    const firebaseConfig = {
+        apiKey: "",
+        authDomain: "edufly-announcement.firebaseapp.com",
+        databaseURL: "https://edufly-announcement-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "edufly-announcement",
+        storageBucket: "edufly-announcement.appspot.com",
+        messagingSenderId: "160973503753",
+        appId: "1:160973503753:web:62a0e0e09250151b7027d8",
+        measurementId: "G-J7967WL9L5"
+    };
           
-            // Initialize Firebase
-            const app = initializeApp(firebaseConfig);
-            const analytics = getAnalytics(app);
+     // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
 
-            import { getDatabase, ref, set, remove, onValue, get } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+    import { getDatabase, ref, set, remove, onValue, get, child, push} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
-            // Initialize Firebase
-            const db = getDatabase(app);
+     // Initialize Firebase
+    const db = getDatabase(app);
+    let events = []
 
-            let events = []
+    let eventDateInput = document.getElementById('eventDate')
+    let eventTitleInput = document.getElementById('eventTitle')
+    let eventDescriptionInput = document.getElementById('eventDescription')
+    let reminderList = document.getElementById('reminderList')
+    let eventIdCounter = 1;
 
-            let eventDateInput = document.getElementById('eventDate')
-            let eventTitleInput = document.getElementById('eventTitle')
-            let eventDescriptionInput = document.getElementById('eventDescription')
-            let reminderList = document.getElementById('reminderList')
-            let eventIdCounter = 3;
+    let AddBtn = document.getElementById('addEvent')
+    let DelBtn = document.getElementById('deleteEvent')
 
-            let AddBtn = document.getElementById('addEvent')
-            let DelBtn = document.getElementById('deleteEvent')
+// Function to fetch all events
+function retData() {
+    return new Promise((resolve, reject) => {
+        const dbRef = ref(db);
+        console.log("Fetching all events...");
 
+        // Clear the events array before fetching new data
+        events = []; // Clear the existing events
 
-            function addEvent(){
-                let date = eventDateInput.value;
-                let title = eventTitleInput.value;
-                let description = eventDescriptionInput.value
-                if(date && title){
-                    let eventId = eventIdCounter++;
+        // Fetch all events under 'events' node
+        get(child(dbRef, 'events/')).then((snapshot) => {
+            if (snapshot.exists()) {
+                const allEvents = snapshot.val();
+                console.log("All event data retrieved:", allEvents);
 
-                    let newEvent = {
-                    id: eventId,
-                    date:date,
-                    title: title,
-                    description: description 
-                };
+                // Loop through each event and push it into the events array
+                for (let id in allEvents) {
+                    const eventData = allEvents[id];
+                    console.log("Processing event data:", eventData);
 
-                const eventsRef = ref(db, 'events/' + eventId);
-                set(eventsRef, newEvent).then(()=>{
-                    events.push(newEvent);
-                    displayReminders()
-                    showCalendar(currentMonth, currentYear)
-                    eventDateInput.value = "";
-                    eventTitleInput.value = "";
-                    eventDescriptionInput.value="";
-                }).catch((error)=>{
-                    console.log(error)
-                });
+                    const event = {
+                        eventid: eventData.id,
+                        date: eventData.date,
+                        title: eventData.title,
+                        description: eventData.description
+                    };
+
+                    events.push(event); // Add each event to the events array
+                    console.log("Event added to array:", event);
+                }
+
+                console.log("Current events array:", events);
+                resolve(); // Resolve the promise after all events are added
+            } else {
+                console.log("No events found in the database.");
+                resolve(); // Resolve even if no events are found
             }
-        }
-
-    document.getElementById('addEvent').addEventListener('click', addEvent)
-
-function deleteEvent(eventId){
-    const eventRef = ref(db, 'events/'+ eventId)
-    remove(eventRef).then(()=>{
-        events = events.filter(event => event.id !== eventId);
-        displayReminders();
-        showCalendar(currentMonth, currentYear);
-    }).catch((error) =>{
-        console.log(error)
-    })
+        }).catch((error) => {
+            alert("Unsuccessful");
+            console.log("Error:", error);
+            reject(error); // Reject the promise on error
+        });
+    });
 }
 
-document.getElementById('deleteEvent').addEventListener('click', deleteEvent(1))
-
+// Function to display reminders
 function displayReminders() {
     reminderList.innerHTML = "";
     for (let i = 0; i < events.length; i++) {
         let event = events[i];
         let eventDate = new Date(event.date);
-        if (eventDate.getMonth() ===
-            currentMonth &&
-            eventDate.getFullYear() ===
-            currentYear) {
+        if (eventDate.getMonth() === currentMonth && eventDate.getFullYear() === currentYear) {
             let listItem = document.createElement("li");
-            listItem.innerHTML =
-                `<strong>${event.title}</strong> - 
-            ${event.description} on 
-            ${eventDate.toLocaleDateString()}`;
+            listItem.innerHTML = `<strong>${event.title}</strong> - ${event.description} on ${eventDate.toLocaleDateString()}`;
 
-            // Add a delete button for each reminder item
-            let deleteButton =
-                document.createElement("button");
+            let deleteButton = document.createElement("button");
             deleteButton.className = "delete-event";
             deleteButton.textContent = "Delete";
             deleteButton.onclick = function () {
-                deleteEvent(event.id);
+                deleteEvent(event.eventid); // Call deleteEvent with the event ID
             };
 
             listItem.appendChild(deleteButton);
@@ -230,30 +215,109 @@ function displayReminders() {
     }
 }
 
-// Function to generate a range of 
-// years for the year select input
-function generate_year_range(start, end) {
-    let years = "";
-    for (let year = start; year <= end; year++) {
-        years += "<option value='" +
-            year + "'>" + year + "</option>";
-    }
-    return years;
+// Function to delete an event
+function deleteEvent(eventId) {
+    const dbRef = ref(db, 'events/' + eventId); // Reference to the specific event
+    remove(dbRef) // Remove the event from the database
+        .then(() => {
+            console.log("Event deleted:", eventId);
+            // Remove the event from the events array
+            events = events.filter(event => event.eventid !== eventId);
+            // Refresh the display
+            displayReminders();
+        })
+        .catch((error) => {
+            console.error("Error deleting event:", error);
+            alert("Failed to delete event.");
+        });
 }
-// Initialize date-related letiables
-let today = new Date();
-let currentMonth = today.getMonth();
-let currentYear = today.getFullYear();
-let selectYear = document.getElementById("year");
-let selectMonth = document.getElementById("month");
 
-let createYear = generate_year_range(1970, 2050);
+// Initial data fetching and displaying
+retData().then(() => {
+    displayReminders(); // Call displayReminders after data retrieval
+    console.log("Events after data retrieval:", events);
+}).catch(error => {
+    console.error("Failed to retrieve events:", error);
+});
 
-document.getElementById("year").innerHTML = createYear;
 
-let calendar = document.getElementById("calendar");
 
-let months = [
+function addEvent() {
+    let date = eventDateInput.value;
+    let title = eventTitleInput.value;
+    let description = eventDescriptionInput.value;
+
+    if (date && title) {
+        // Reference to the events node
+        const eventsRef = ref(db, 'events');
+
+        // Fetch existing events to determine the maximum ID
+        get(eventsRef).then((snapshot) => {
+            let maxId = 0;
+
+            if (snapshot.exists()) {
+                const allEvents = snapshot.val();
+                // Loop through existing events to find the maximum ID
+                for (let id in allEvents) {
+                    if (allEvents[id].id > maxId) {
+                        maxId = allEvents[id].id; // Update maxId if a larger ID is found
+                    }
+                }
+            }
+
+            // Generate a new unique ID by incrementing the maximum ID
+            let newId = maxId + 1;
+
+            // Create the new event object with the new ID
+            let newEvent = {
+                id: newId,
+                date: date,
+                title: title,
+                description: description
+            };
+
+            // Set the new event data in the database
+            const newEventRef = ref(db, 'events/' + newId); // Use the new ID as the reference
+            set(newEventRef, newEvent).then(() => {
+                events.push(newEvent); // Add the new event to the local array
+                displayReminders(); // Refresh the display
+                showCalendar(currentMonth, currentYear); // Update calendar
+                // Clear input fields
+                eventDateInput.value = "";
+                eventTitleInput.value = "";
+                eventDescriptionInput.value = "";
+            }).catch((error) => {
+                console.log(error);
+            });
+        }).catch((error) => {
+            console.log("Error fetching events:", error);
+        });
+    }
+}
+
+
+
+    document.getElementById('addEvent').addEventListener('click', addEvent)
+
+
+    function generate_year_range(start, end){
+        let years = ""
+        for (let year = start; year <= end; year++){
+            years += "<option value='" + year + "'>" + year + "</option>"
+        }
+        return years
+    }
+
+    let today = new Date()
+    let currentMonth = today.getMonth()
+    let currentYear = today.getFullYear()
+    let selectYear = document.getElementById("year")
+    let selectMonth = document.getElementById('month')
+    let createYear = generate_year_range(1970, 2050);
+
+    document.getElementById('year').innerHTML = createYear;
+
+    let months = [
     "January",
     "February",
     "March",
@@ -266,57 +330,55 @@ let months = [
     "October",
     "November",
     "December"
-];
-let days = [
+    ];
+    let days = [
     "Sun", "Mon", "Tue", "Wed",
     "Thu", "Fri", "Sat"];
 
-let $dataHead = "<tr>";
-for (let dhead in days) {
-    $dataHead += "<th data-days='" +
-        days[dhead] + "'>" +
-        days[dhead] + "</th>";
-}
-$dataHead += "</tr>";
+    let $dataHead = "<tr>";
+    for (let dhead in days) {
+        $dataHead += "<th data-days='" +
+            days[dhead] + "'>" +
+            days[dhead] + "</th>";
+    }
+    $dataHead += "</tr>";
 
-document.getElementById("thead-month").innerHTML = $dataHead;
+    document.getElementById("thead-month").innerHTML = $dataHead;
 
-let monthAndYear =
-    document.getElementById("monthAndYear");
-showCalendar(currentMonth, currentYear);
+    let monthAndYear = document.getElementById("monthAndYear");
+    showCalendar(currentMonth, currentYear);
 
-// Function to navigate to the next month
-function next() {
+    // Function to navigate to the next month
+    function next() {
     currentYear = currentMonth === 11 ?
         currentYear + 1 : currentYear;
     currentMonth = (currentMonth + 1) % 12;
     showCalendar(currentMonth, currentYear);
-}
-document.getElementById("next").addEventListener('click', next)
+    }
+    document.getElementById("next").addEventListener('click', next)
 
-// Function to navigate to the previous month
-function previous() {
+    // Function to navigate to the previous month
+    function previous() {
     currentYear = currentMonth === 0 ?
         currentYear - 1 : currentYear;
     currentMonth = currentMonth === 0 ?
         11 : currentMonth - 1;
     showCalendar(currentMonth, currentYear);
-}
+    }
 
-document.getElementById("previous").addEventListener('click', previous)
+    document.getElementById("previous").addEventListener('click', previous)
 
-// Function to jump to a specific month and year
-function jump() {
+    // Function to jump to a specific month and year
+    function jump() {
     currentYear = parseInt(selectYear.value);
     currentMonth = parseInt(selectMonth.value);
     showCalendar(currentMonth, currentYear);
-}
+    }
 
-document.getElementById('month').addEventListener('change', jump)
-document.getElementById('year').addEventListener('change', jump)
+    document.getElementById('month').addEventListener('change', jump)
+    document.getElementById('year').addEventListener('change', jump)
 
-
-function showCalendar(month, year) {
+    function showCalendar(month, year) {
     let firstDay = new Date(year, month, 1).getDay();
     let tbl = document.getElementById("calendar-body");
     tbl.innerHTML = "";
@@ -400,6 +462,7 @@ function getEventsOnDate(date, month, year) {
     });
 }
 
+
 // Function to check if there are events on a specific date
 function hasEventOnDate(date, month, year) {
     return getEventsOnDate(date, month, year).length > 0;
@@ -414,7 +477,7 @@ function daysInMonth(iMonth, iYear) {
 showCalendar(currentMonth, currentYear);
 
 
-    </script>
-</body>
+</script>
 
+</body>
 </html>
