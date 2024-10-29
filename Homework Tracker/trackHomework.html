@@ -17,15 +17,19 @@
 
     
     <style>   
-    #AddHomework{
+     #AddHomework{
+        color:brown;
         background-color: white;
         width: 200px;
         height: 50px;
-        position: absolute; 
-        top: 80px;
-        right: 20px;
-        display: flex;
-        align-items: center;
+        text-decoration: none;
+    } 
+
+    #TrackHomework{
+        color:white;
+        background-color: brown;
+        width: 200px;
+        height: 50px;
         text-decoration: none;
     } 
     </style>
@@ -35,8 +39,8 @@
 <body class="whole">
     <nav class="navbar">
         <div class="navbar-left">
-            <a href="./home_teacher.html">
-                <img src="./img/eduflyicon.png" alt="Edufly Icon" style="height: 50px; width: auto;">
+            <a href="../home_teacher.html">
+                <img src="../img/eduflyicon.png" alt="Edufly Icon" style="height: 50px; width: auto;">
             </a>
             <span style="padding-right: 10px;"></span>
             <a href="../Homework Tracker/trackHomework.html" class="btn btn-success btn-sm active" style="margin-right: 10px;">&#9997;&#65039; <br> Homework</a>
@@ -45,7 +49,7 @@
             <a href="../Announcements/HomeAnnouncement.html" class="btn btn-success btn-sm" style="margin-right: 10px;">&#128226; <br> Announcements</a>
         </div>
         <div class="navbar-right">
-            <span class="icon-right"><img id="profile" src="./img/profile.png">
+            <span class="icon-right"><img id="profile" src="../img/profile.png">
                 <span class="dropdown">{{Name}}
                 <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> </button>
                 <ul class="dropdown-menu">
@@ -61,7 +65,12 @@
     <div class="container-fluid">
         <div class="row">
             <h1 style="text-align: center; background-color: #8F8073; padding: 40px;">All Assignments</h1>
-            <div class="row"> <a class="btn" id="AddHomework" href="./AddAssignment.html" role="button"> Add Assignment </a> </div>
+            <div class="row"> 
+                <div class="col-2"></div>
+                <div class="col-4 d-flex justify-content-center"> <a class="btn text-center" id="AddHomework" href="./AddAssignment.html" role="button"> Add Assignment </a> </div>
+                <div class="col-4 d-flex justify-content-center"><a class="btn text-center" id="TrackHomework" href="./assignmentSubmission.html" role="button">Track Assignments</a></div>
+                <div class="col-2"></div>
+            </div>
             <div id="AllAssignments"></div>
         </div>
     </div>
