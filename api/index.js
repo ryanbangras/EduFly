@@ -4,9 +4,9 @@ var cors = require("cors");
 const Student = require("./models/Student");
 const Timetable = require("./models/Timetable");
 const Announcement = require("./models/Announcement");
-const dotenv = require('dotenv');
 const app = express();
 
+const dotenv = require('dotenv');
 dotenv.config({ path: './secret.env' });
 
 app.use(cors());
