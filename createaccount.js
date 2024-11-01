@@ -5,7 +5,7 @@ import {} from "https://www.gstatic.com/firebasejs/8.8.1/firebase-database.js"
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js'
 // TODO: Replace the following with your app's Firebase project configuration
     const firebaseConfig = {
-        //apiKey: 
+        apiKey: FIREBASEDURI,
         authDomain: "edufly-61bfe.firebaseapp.com",
         projectId: "edufly-61bfe",
         storageBucket: "edufly-61bfe.appspot.com",
